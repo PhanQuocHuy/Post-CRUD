@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1><%= @post.title %></h1>
+
+<p><%= simple_format(@post.content) %></p>
+
+<p><strong>Author:</strong> <%= @post.user.email if @post.user %></p>
+
+<hr>
+
+<div>
+  <%= link_to "✏️ Edit this post", edit_post_path(@post) %> |
+  <%= link_to "⬅️ Back to posts", posts_path %> |
+  <%= button_to "🗑️ Destroy this post", @post, method: :delete, data: { confirm: "Are you sure?" } %>
+</div>
