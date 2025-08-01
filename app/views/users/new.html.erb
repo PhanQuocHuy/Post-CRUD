@@ -1,33 +1,37 @@
-<h2>Sign Up</h2>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-4" style="width: 400px;">
+    <h2 class="text-center mb-4">Sign Up</h2>
 
-<%= form_with model: @user, local: true do |form| %>
+    <%= form_with model: @user, local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :email, class: "form-label" %>
+        <%= form.email_field :email, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :email %><br>
-    <%= form.email_field :email %>
+      <div class="mb-3">
+        <%= form.label :password, class: "form-label" %>
+        <%= form.password_field :password, class: "form-control" %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :password_confirmation, "Confirm Password", class: "form-label" %>
+        <%= form.password_field :password_confirmation, class: "form-control" %>
+      </div>
+
+      <% if @user.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <%= form.submit "Sign Up", class: "btn btn-primary" %>
+        <%= link_to "Back to Login", login_path, class: "btn btn-link" %>
+      </div>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :password %><br>
-    <%= form.password_field :password %>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation, "Confirm Password" %><br>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <div>
-    <%= form.submit "Sign Up" %>
-  </div>
-  
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-<% end %>
+</div>

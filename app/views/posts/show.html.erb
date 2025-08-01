@@ -1,18 +1,27 @@
-<p style="color: green"><%= notice %></p>
-
-<h1><%= @post.title %></h1>
-
-<p><%= simple_format(@post.content) %></p>
-
-<p><strong>Author:</strong> <%= @post.user.email if @post.user %></p>
+<h2><%= @post.title %></h2>
+<p><%= @post.content %></p>
+<p><small>Posted by: <%= @post.user.email %></small></p>
 
 <hr>
 
-<div>
-  <% if current_user == @post.user %>
-    <%= link_to "Edit this post", edit_post_path(@post) %> |
-    <%= button_to "Delete post", @post, method: :delete, data: { confirm: "Are you sure?" } %> |
-  <% end %>
+<h3>Comments</h3>
+<% @post.comments.each do |comment| %>
+  <div>
+    <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+  </div>
+<% end %>
 
-  <%= link_to "Back to posts", posts_path %>
-</div>
+<% if current_user %>
+  <h4>Thêm bình luận</h4>
+  <%= form_with(model: [@post, Comment.new], local: true) do |form| %>
+    <div>
+      <%= form.text_area :content, rows: 3 %>
+    </div>
+    <div class="d-flex">
+      <%= form.submit "Bình luận", class: "btn btn-primary" %>
+      <%= link_to "Quay lại", posts_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+<% else %>
+  <p><%= link_to "Log in", new_session_path %> to comment.</p>
+<% end %>

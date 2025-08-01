@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
-  before_action :require_login
+  # before_action :require_login
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authorize_post, only: %i[ edit update destroy ]
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    # @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.includes(:user)
   end
 
   def show
@@ -28,12 +30,15 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.update(post_params)
-      redirect_to @post, notice: "Post was successfully updated."
+    @post = Post.find(params[:id])
+    if @post.update(post_params.merge(user: current_user))
+      redirect_to @post, notice: "Post updated successfully."
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
+
+
 
   def destroy
     @post.destroy

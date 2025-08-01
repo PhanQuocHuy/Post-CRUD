@@ -8,3 +8,18 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+html, body {
+    min-height: 100%;
+}
+
+body {
+      min-width: 100%;
+    -webkit-text-size-adjust: none;
+    background-color: #ffffff;
+    font-size: 16px;
+    margin: 0;
+}
+
+.menu a {
+    color: #ffffff !important;
+}

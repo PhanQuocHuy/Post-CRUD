@@ -8,20 +8,19 @@
 
 <hr>
 
-<div id="posts">
-  <% @posts.each do |post| %>
-    <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px;">
-      <h2><%= link_to post.title, post_path(post) %></h2>
-      <p><%= truncate(post.content, length: 200) %></p>
-      <p><small>Posted by: <%= post.user.email %></small></p>
+<% @posts.each do |post| %>
+  <div class="post">
+    <h2><%= link_to post.title, post_path(post) %></h2>
+    <p><%= truncate(post.content, length: 200) %></p>
+    <p><small>Posted by: <%= post.user.email %></small></p>
 
-      <%= link_to "Show", post_path(post) %>
+    <%= link_to "Show", post_path(post), class: "btn btn-primary btn-sm" %>
 
-      <% if post.user == current_user %>
-        |
-        <%= link_to "Edit", edit_post_path(post) %> |
-        <%= link_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" } %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+    <% if post.user == current_user %>
+      |
+      <%= link_to "Edit", edit_post_path(post), class: "btn btn-warning btn-sm" %> |
+      <%= button_to "Delete", post_path(post), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm", form: { style: "display:inline;" } %>
+    <% end %>
+  </div>
+<% end %>
+
